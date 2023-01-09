@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/black.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/zenburn.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Flutter 
+#### by Lukas Zorn
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Überblick
+- Einführung in Flutter
+- Entwicklungsumgebung einrichten
+- Basiskonzepte
+- Features und -Erweiterungen
+- Beispielanwendungen
+- Fazit
+</div></script></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Einführung 
+- Was ist Flutter?
+- Warum Flutter?
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Was ist Flutter?
+
+- Open-Source-Mobile-Application-Framework 
+- by Google
+- basierend auf Dart
+- Plattform übergreifend
+- Hot Reload 
+- alternative zu react
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Warum Flutter?
+
+- Schnelle Entwicklung
+- Eine Codebase 
+- Benutzerdefinierte Widgets
+- Hohe Leistung
+- Große Community
+</div>
+
+<aside class="notes"><p>Schnelle Entwicklung: Hot Reload &gt;Änderungen schnell testen &gt;  beschleunigt Entwicklungsprozess</p>
+<p>Benutzerdefinierten Widgets: native Benutzeroberflächen &gt; ohne dass Plattform-spezifischer Code</p>
+<p> Hohe Leistung: in Maschinencode compiliert</p>
+<p>Aktive Community &gt; neue Features und Erweiterungen &gt; Vielzahl von Ressourcen und Unterstützung.</p>
+</aside></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Flutter-Entwicklungsumgebung einrichten
+
+-  Flutter installieren und einrichten
+-  Flutter-Projekt erstellen und ausführen
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Installation
+
+- Installationspaket von der Flutter-Website laden & ausführen
+- evtl. Flutter zu $PATH hinzufügen
+- Android-SDK und das Xcode-SDK (für iOS-Entwicklung) laden
+-  im Terminal: `$flutter doctor`
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Projekt erstellen und ausführen
+
+    
+- `flutter create [project_name]`
+    
+- `flutter run`  oder ` flutter run -d [device_id]`
+</div></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Basiskonzepte
+
+- Statisches Widget
+- Dynamisches Widget 
+- Widget-Bäume
+- Layout
+- Routing und Navigationssystem
+</div>
+
+<aside class="notes"><p>Flutter-Basiskonzepte sind die Grundlagen, auf denen Flutter aufgebaut ist. Dazu gehören</p>
+</aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Statisches Widget
+
+```Dart 
+// Erstelle ein Text-Widget mit dem Inhalt "Hello World"
+Text('Hello World')
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Dynamisches Widget 
+```Dart 
+// Erstelle eine Variable, um den Zähler zu speichern
+int counter = 0;
+
+// Erstelle ein FloatingActionButton-Widget,
+//das den Zähler bei jedem Klick erhöht
+FloatingActionButton(
+  onPressed: () {
+    setState(() {
+      // Erhöhe den Zähler um 1
+      counter++;
+    });
+  },
+  // Zeige den aktuellen Wert des Zählers an
+  child: Text('$counter'), 
+)
+
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Widget-Bäume:
+
+```Dart
+// Erstelle ein Container-Widget mit zwei Spalten, die jeweils zwei Text-Widgets enthalten
+Container(
+  child: Row(
+    children: [
+      Column(
+        children: [
+          Text('Column 1'),
+          Text('Column 2'),
+        ],
+      ),
+      Column(
+        children: [
+          Text('Column 3'),
+          Text('Column 4'),
+        ],
+      ),
+    ],
+  ),
+)
+
+```
+</div>
+
+<aside class="notes"><p>Jedes Flutter-Programm hat einen Widget-Baum, der die Hierarchie der Widgets in der Anwendung darstellt. Jedes Widget hat ein oder mehrere Kinder und ein Elternelement. Die Widget-Klasse selbst ist das Wurzel-Widget des Baums.</p>
+</aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Layout 
+   
+```Dart
+// Erstelle einen Container mit zwei Spalten, die die gleiche Breite haben und jeweils eine andere Farbe haben
+Container(
+  width: 100,
+  height: 100,
+  child: Flex(
+  // Legen Sie fest, dass die Spalten horizontal angeordnet werden sollen
+    direction: Axis.horizontal, 
+    children: [
+      Expanded(
+        child: Container(
+        // Erste Spalte hat die Farbe rot
+          color: Colors.red, 
+        ),
+      ),
+      Expanded(
+        child: Container(
+        // Zweite Spalte hat die Farbe grün
+          color: Colors.green, 
+        ),
+      ),
+    ],
+  ),
+)
+```
+</div>
+
+<aside class="notes"><p>Flutter verwendet ein flexibles Layout-System, das es Entwicklern ermöglicht, Benutzeroberflächen mit verschiedenen Bildschirmgrößen und -formfaktoren zu erstellen. Dazu gehören Box-Layout-Widgets (z.B. Container, Row, Column), die es ermöglichen, andere Widgets zu gruppieren und anzuordnen, und das Flex-Layout-System, das es ermöglicht, die Größe und das Verhältnis von Widgets anzupassen.</p>
+</aside></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Routing und Navigationssystem
+   
+   
+```Dart
+// Navigiere zur SecondRoute-Seite
+Navigator.push(
+  context,
+  MaterialPageRoute(
+    builder: (context) => SecondRoute(),
+  ),
+);
+```
+```Dart
+// Navigiere zurück zur vorherigen Seite und übergebe den Wert "some data"
+Navigator.pop(context, 'some data');
+
+```
+</div>
+
+<aside class="notes"><p>: Flutter hat ein eingebautes Navigationssystem, das es Entwicklern ermöglicht, zwischen verschiedenen Seiten (auch als &quot;Routen&quot; bezeichnet) in einer Anwendung zu navigieren. Dazu gehören die Verwendung von Navigator-Widgets, um Routen zu pushen und zu popen, und die Verwendung von Routen und RouteArguments, um Daten zwischen Routen zu übergeben.</p>
+</aside></script></section></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Flutter-Features und -Erweiterungen
+- Integration von Native Code (z.B. Zugriff auf die Kamera, GPS, etc.)
+-   Verwendung von externen Paketen und Bibliotheken
+-   Internationalisierung und Lokalisierung
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#### Integration von Native Code 
+###### Kamera
+```Dart 
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
+
+class MyCameraApp extends StatefulWidget {
+  @override
+  _MyCameraAppState createState() => _MyCameraAppState();
+}
+
+class _MyCameraAppState extends State<MyCameraApp> {
+  // Variablen für das Bild und den Image-Picker
+  File _image;
+  final picker = ImagePicker();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Kamera'),
+      ),
+      body: Center(
+        child: _image == null
+            ? Text('Kein Bild ausgewählt.')
+            : Image.file(_image),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _getImage,
+        tooltip: 'Bild auswählen',
+        child: Icon(Icons.add_a_photo),
+      ),
+    );
+  }
+
+  // Funktion zum Öffnen des Image-Pickers und Auswählen eines Bilds
+  void _getImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.camera);
+    setState(() {
+      _image = File(pickedFile.path);
+    });
+  }
+}
+
+```
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+###### GPS
+```Dart
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:location/location.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  Location _location = Location();
+  LocationData _currentLocation;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('GPS'),
+      ),
+      body: Center(
+        child: Text(_currentLocation != null
+            ? 'Breitengrad: `${_currentLocation.latitude}, Längengrad: $`{_currentLocation.longitude}'
+            : 'Lade Standort...'),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _getLocation,
+        tooltip: 'Standort abfragen',
+        child: Icon(Icons.location_on),
+      ),
+    );
+  }
+
+  // Funktion zum Abfragen der aktuellen GPS-Position
+  void _getLocation() async {
+    try {
+      // Frage die GPS-Berechtigung ab
+      final status = await _location.requestPermission();
+      if (status == PermissionStatus.granted) {
+        // Hole die aktuelle GPS-Position
+        _currentLocation = await _location.getLocation();
+        setState(() {});
+      }
+    } on PlatformException catch (e) {
+      if (e.code == 'PERMISSION_DENIED') {
+        print('Permission denied');
+      }
+    }
+  }
+}
+
+```
+</div></script></section></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Beispielanwendungen
+
+-   Google Ads
+-   Reflectly
+- BMW-App
+- Tencent
+-   Alibaba
+</div></script></section><section ><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Fazit 
+- pro
+- con
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### pro
+-   Ein Codebase für mehrere Plattformen
+-   Schnelle Entwicklung
+-   Nativ gefühlte Anwendungen
+-   Breites Widget-Angebot
+-  Integration von Native Code
+-   Verwendung von externen Paketen und Bibliotheken
+-   Internationalisierung und Lokalisierung
+- Performance
+</div></script></section><section data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## con 
+
+-   Hohe Lernkurve
+-   Integration von Native Code kann Probleme mit sich bringen 
+-  Schlechter Code != Performance 
+-   manche externe Bibliotheken und Pakete sind möglicherweise nicht vollständig kompatibel
+</div></script></section></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Herzlichen Dank für eure AUfmerksamkeit!
+</div></script></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+			]
+		},
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":960,"height":700,"margin":0.04,"controls":true,"progress":true,"slideNumber":false,"transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>
