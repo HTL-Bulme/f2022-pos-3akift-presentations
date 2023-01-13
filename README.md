@@ -12,4 +12,3 @@
 | Flutter                        | 2023-01-12 | 15 min   |
 | BDD / ATDD                     | 2022-12-22 | 35 min   |
 | Software Documentation         | 2022-12-22 | 35 min   |
-
