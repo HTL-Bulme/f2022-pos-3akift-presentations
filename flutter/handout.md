@@ -9,7 +9,6 @@
 - Designoptionen
 - Beispielanwendungen
 - Fazit
-
 ---
 
 ## Einführung 
