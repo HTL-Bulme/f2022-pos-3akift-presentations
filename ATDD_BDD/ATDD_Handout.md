@@ -46,7 +46,7 @@ Stability, recovery, compatibility, maintainability, technical support availabil
 
 
 
-[Bild 1]: img/ATDD_Cycle1.png  "ATDD Cyle"
+[Bild 1]: ATDD_Cycle1.png  "ATDD Cyle"
 ![ATDD Cycle][Bild 1]
 
 #### 1. Discuss  
@@ -65,7 +65,7 @@ The output of this phase are acceptance tests in the form of plain English phras
 
 In this stage developers and testes implement the acceptance tests in an automatic testing framework to ensure that they not just remain specifications but can be actually executed in the project. Tests written in a programming language are hard to understand for non-technical members of the team, therefor there are various tools to make tests out of tables and display the results in a form everyone is able to understand.
 
-![Tests](img/tests.png)
+![Tests](tests.png)
 
 + Code written in a specific language
 + Tables explaining all the specifications
@@ -73,7 +73,7 @@ In this stage developers and testes implement the acceptance tests in an automat
 
 Frameworks for ATDD:
 
-![Alt text](img/frameworks.png)
+![Alt text](frameworks.png)
 
 #### 3. Develop - Develop the necessary features
 This is the implementation stage where you develop the necessary features. This is done through the test first development approach.
