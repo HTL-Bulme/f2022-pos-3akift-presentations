@@ -10,5 +10,5 @@
 | [Bug tracking software](Bug_tracking_software/)          | 2022-12-15 | 35 min   |
 | [Dart](Dart/)                           | 2022-12-15 | 18 min   |
 | [Flutter](flutter/)                        | 2023-01-12 | 15 min   |
-| BDD / ATDD                     | 2022-12-22 | 35 min   |
+| BDD / ATDD                     | 2023-01-18 | 35 min   |
 | Software Documentation         | 2022-12-22 | 35 min   |
